@@ -19,14 +19,20 @@ public class Application extends Controller {
     }
 
     public static Result game() {
-        return ok(game.render("", "", Comment.find.all()));
+        List<Comment> allComments = Comment.find.orderBy("postDate desc").findList();
+        return ok(game.render(allComments, commentForm));
     }
 
     public static Result newComment() {
         Form<Comment> filledCommentForm = commentForm.bindFromRequest();
-        Comment comment = filledCommentForm.get();
-        comment.save();
-        return ok(game.render(comment.getUsername(), comment.getMessage(), Comment.find.all()));
+        List<Comment> allComments = Comment.find.orderBy("postDate desc").findList();
+        if(filledCommentForm.hasErrors()) {
+            return badRequest(game.render(allComments, commentForm));
+        } else {
+            Comment comment = filledCommentForm.get();
+            comment.save();
+            return ok(game.render(allComments, commentForm));
+        }
     }
   
 }

@@ -1,16 +1,23 @@
 package models;
 
+import play.data.validation.Constraints;
 import play.db.ebean.Model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @Entity
 public class Comment extends Model {
     @Id
     private Long id;
+    @Constraints.Required
     private String message;
+    @Constraints.Required
     private String username;
+    private Date postDate = new Date();
+    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("hh:mm:ss");
 
     public static Finder<Long, Comment> find = new Finder<Long, Comment>(
             Long.class, Comment.class
@@ -39,4 +46,17 @@ public class Comment extends Model {
     public void setUsername(String username) {
         this.username = username;
     }
+
+    public String getSimpleDate() {
+        return simpleDateFormat.format(getPostDate());
+    }
+
+    public Date getPostDate() {
+        return postDate;
+    }
+
+    public void setPostDate(Date postDate) {
+        this.postDate = postDate;
+    }
+
 }

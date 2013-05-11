@@ -1,36 +1,19 @@
-@(username: String, message: String, comments: List[Comment])
+@(comments: List[Comment], commentForm: Form[Comment])
+@import helper.twitterBootstrap._
 
 @main("Comments") {
 
-<form class="form-horizontal" action="/game" method="post">
-    <div class="control-group">
-        <label class="control-label" for="inputUsername">username</label>
-        <div class="controls">
-            <input type="text" id="inputUsername" name="username" placeholder="Username">
+@helper.form(action = routes.Application.newComment()) {
+    @helper.inputText(commentForm("username"))
+    @helper.inputText(commentForm("message"))
+    <button type="submit" class="btn">Post</button>
+}
+
+    <hr/>
+    @for(comment <- comments) {
+        <div class="well well-small">
+            <strong>@comment.getUsername()</strong> (@comment.getSimpleDate()) <br/>
+            Says: @comment.getMessage()
         </div>
-    </div>
-
-    <div class="control-group">
-        <label class="control-label" for="inputMessage">Message</label>
-        <div class="controls">
-            <input type="text" id="inputMessage" name="message" placeholder="Message">
-        </div>
-    </div>
-
-    <div class="control-group">
-        <div class="controls">
-            <button type="submit" class="btn">Post</button>
-        </div>
-    </div>
-
-</form>
-
-        <hr/>
-        @for(comment <- comments) {
-            <div class="well well-small">
-                username: @comment.getUsername() <br/>
-                Says: @comment.getMessage()
-            </div>
-        }
-
+    }
 }
