@@ -1,0 +1,19 @@
+@(username: String, message: String, comments: List[Comment])
+
+@main("Comments") {
+
+        <form action="/game" method="post">
+            username: <input type="text" name="username"> <br/>
+            message: <input type="text" name="message">
+            <input type="submit" value="Post">
+        </form>
+
+        <hr/>
+        @for(comment <- comments) {
+            <div>
+                username: @comment.getUsername() <br/>
+                Says: @comment.getMessage()
+            </div>
+        }
+
+}
