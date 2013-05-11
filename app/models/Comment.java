@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class Comment extends Model {
@@ -57,6 +58,10 @@ public class Comment extends Model {
 
     public void setPostDate(Date postDate) {
         this.postDate = postDate;
+    }
+
+    public static List<Comment> getCommentsNewestFirst() {
+        return Comment.find.orderBy("postDate desc").findList();
     }
 
 }
