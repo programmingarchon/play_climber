@@ -2,11 +2,28 @@
 
 @main("Comments") {
 
-        <form action="/game" method="post">
-            username: <input type="text" name="username"> <br/>
-            message: <input type="text" name="message">
-            <input type="submit" value="Post">
-        </form>
+<form class="form-horizontal" action="/game" method="post">
+    <div class="control-group">
+        <label class="control-label" for="inputUsername">username</label>
+        <div class="controls">
+            <input type="text" id="inputUsername" name="username" placeholder="Username">
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label" for="inputMessage">Message</label>
+        <div class="controls">
+            <input type="text" id="inputMessage" name="message" placeholder="Message">
+        </div>
+    </div>
+
+    <div class="control-group">
+        <div class="controls">
+            <button type="submit" class="btn">Post</button>
+        </div>
+    </div>
+
+</form>
 
         <hr/>
         @for(comment <- comments) {
