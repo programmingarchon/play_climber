@@ -1,8 +1,11 @@
 package controllers;
 
 import models.Comment;
+import org.codehaus.jackson.node.ArrayNode;
+import org.codehaus.jackson.node.ObjectNode;
 import play.*;
 import play.data.Form;
+import play.libs.Json;
 import play.mvc.*;
 
 import views.html.*;
@@ -33,6 +36,17 @@ public class Application extends Controller {
         comment.save();
         allComments = Comment.getCommentsNewestFirst();
         return ok(game.render(allComments, commentForm));
+    }
+
+    public static Result commentList() {
+        ObjectNode jsonResult = Json.newObject();
+        ArrayNode commentsArray = jsonResult.arrayNode();
+        jsonResult.put("comments", commentsArray);
+        List<Comment> allComments = Comment.getCommentsNewestFirst();
+        for(Comment comment : allComments){
+            commentsArray.add(comment.getJson());
+        }
+        return ok(jsonResult);
     }
   
 }

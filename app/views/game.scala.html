@@ -10,10 +10,34 @@
 }
 
     <hr/>
-    @for(comment <- comments) {
-        <div class="well well-small">
-            <strong>@comment.getUsername()</strong> (@comment.getSimpleDate()) <br/>
-            Says: @comment.getMessage()
-        </div>
-    }
+
+
+    <div id="comments">
+    </div>
+
+<script id="commentTemplate" type="text/x-handlebars-template">
+    {{#each comments}}
+    <div class='well well-small'>
+        <strong>{{this.username}}</strong> ({{this.postDate}}) <br/>
+        Says: {{this.message}}
+    </div>
+    {{/each}}
+</script>
+
+<script type="text/javascript">
+    $(function(){
+        var source   = $("#commentTemplate").html();
+        var commentTemplate = Handlebars.compile(source);
+
+        setInterval(function(){
+            $.getJSON("/commentList", processCommentsList)
+        },1000);
+
+        function processCommentsList(commentsResponse) {
+            $("#comments").html(commentTemplate(commentsResponse));
+        };
+
+    });
+</script>
+
 }

@@ -1,7 +1,9 @@
 package models;
 
+import org.codehaus.jackson.node.ObjectNode;
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
+import play.libs.Json;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -62,6 +64,14 @@ public class Comment extends Model {
 
     public static List<Comment> getCommentsNewestFirst() {
         return Comment.find.orderBy("postDate desc").findList();
+    }
+
+    public ObjectNode getJson() {
+        ObjectNode result = Json.newObject();
+        result.put("username", getUsername());
+        result.put("message", getMessage());
+        result.put("postDate", getSimpleDate());
+        return result;
     }
 
 }
