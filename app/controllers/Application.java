@@ -19,8 +19,7 @@ public class Application extends Controller {
     }
 
     public static Result game() {
-        List<Comment> allComments = Comment.getCommentsNewestFirst();
-        return ok(game.render(allComments, commentForm));
+        return ok(game.render(Comment.getCommentsNewestFirst(), commentForm));
     }
 
     public static Result newComment() {
@@ -29,12 +28,11 @@ public class Application extends Controller {
         if(filledCommentForm.hasErrors()) {
             allComments = Comment.getCommentsNewestFirst();
             return badRequest(game.render(allComments, commentForm));
-        } else {
-            Comment comment = filledCommentForm.get();
-            comment.save();
-            allComments = Comment.getCommentsNewestFirst();
-            return ok(game.render(allComments, commentForm));
         }
+        Comment comment = filledCommentForm.get();
+        comment.save();
+        allComments = Comment.getCommentsNewestFirst();
+        return ok(game.render(allComments, commentForm));
     }
   
 }
