@@ -1,6 +1,7 @@
 package controllers;
 
 import models.Comment;
+import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.node.ArrayNode;
 import org.codehaus.jackson.node.ObjectNode;
 import play.*;
@@ -22,20 +23,17 @@ public class Application extends Controller {
     }
 
     public static Result game() {
-        return ok(game.render(Comment.getCommentsNewestFirst(), commentForm));
+        return ok(game.render(commentForm));
     }
 
     public static Result newComment() {
         Form<Comment> filledCommentForm = commentForm.bindFromRequest();
-        List<Comment> allComments;
         if(filledCommentForm.hasErrors()) {
-            allComments = Comment.getCommentsNewestFirst();
-            return badRequest(game.render(allComments, commentForm));
+            return badRequest(game.render(commentForm));
         }
         Comment comment = filledCommentForm.get();
         comment.save();
-        allComments = Comment.getCommentsNewestFirst();
-        return ok(game.render(allComments, commentForm));
+        return ok(game.render(commentForm));
     }
 
     public static Result commentList() {
@@ -47,6 +45,23 @@ public class Application extends Controller {
             commentsArray.add(comment.getJson());
         }
         return ok(jsonResult);
+    }
+
+    public static Result newJSONComment() {
+        JsonNode json = request().body().asJson();
+        if(json == null) {
+            return badRequest("Expecting Json data");
+        } else {
+            String username = json.findPath("username").getTextValue();
+            String message = json.findPath("message").getTextValue();
+            if(username == null || message == null) {
+                return badRequest("Missing parameter");
+            } else {
+                Comment comment = new Comment(username, message);
+                comment.save();
+                return ok();
+            }
+        }
     }
   
 }

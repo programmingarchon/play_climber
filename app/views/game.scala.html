@@ -1,4 +1,4 @@
-@(comments: List[Comment], commentForm: Form[Comment])
+@(commentForm: Form[Comment])
 @import helper.twitterBootstrap._
 
 @main("Comments") {
@@ -6,11 +6,10 @@
 @helper.form(action = routes.Application.newComment()) {
     @helper.inputText(commentForm("username"))
     @helper.inputText(commentForm("message"))
-    <button type="submit" class="btn">Post</button>
+    <button type="button" class="btn" onclick="postComment();">Post</button>
 }
 
     <hr/>
-
 
     <div id="comments">
     </div>
@@ -25,6 +24,19 @@
 </script>
 
 <script type="text/javascript">
+    function postComment() {
+        var json = {
+            username: $('#username').val(),
+            message: $('#message').val()
+        }
+        $.ajax({
+            type: "POST",
+            url: "/newJSONComment",
+            contentType: 'application/json',
+            data: JSON.stringify(json)
+        })
+    }
+
     $(function(){
         var source   = $("#commentTemplate").html();
         var commentTemplate = Handlebars.compile(source);

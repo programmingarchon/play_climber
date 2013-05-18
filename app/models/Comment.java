@@ -26,6 +26,13 @@ public class Comment extends Model {
             Long.class, Comment.class
     );
 
+    public Comment() {}
+
+    public Comment(String username, String message) {
+        this.username = username;
+        this.message = message;
+    }
+
     public Long getId() {
         return id;
     }
