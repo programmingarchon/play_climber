@@ -2,17 +2,27 @@
 @import helper.twitterBootstrap._
 
 @main("Comments") {
+<script src="@routes.Assets.at("javascripts/climberMain.js")" type="text/javascript"></script>
 
-@helper.form(action = routes.Application.newComment()) {
-    @helper.inputText(commentForm("username"))
-    @helper.inputText(commentForm("message"))
-    <button type="button" class="btn" onclick="postComment();">Post</button>
-}
+<div class="row">
+    <div class="span8">
+        <div id="enchant-stage">
 
-    <hr/>
-
-    <div id="comments">
+        </div>
     </div>
+    <div class="span3">
+        @helper.form(action = routes.Application.newComment()) {
+        @helper.inputText(commentForm("username"))
+        @helper.inputText(commentForm("message"))
+        <button type="button" class="btn" onclick="postComment();">Post</button>
+        }
+
+        <hr/>
+
+        <div id="comments">
+        </div>
+    </div>
+</div>
 
 <script id="commentTemplate" type="text/x-handlebars-template">
     {{#each comments}}
