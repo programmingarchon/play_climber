@@ -13,6 +13,7 @@ Character = Class.create(Sprite, {
         this.gravitySpeed = 2;
         this.onGround = false;
         this.collidedObject = null;
+        this.drag = 0.5;
     },
 
     onenterframe: function() {
@@ -38,6 +39,13 @@ Character = Class.create(Sprite, {
     calculateAndApplyAccelerations: function() {
         if(!this.onGround) {
             this.yAcceleration += this.gravitySpeed;
+        }
+        if(this.xAcceleration != 0) {
+            if(this.xAcceleration > 0) {
+                this.xAcceleration -= this.drag;
+            } else {
+                this.xAcceleration += this.drag;
+            }
         }
         if(this.yAcceleration > this.yMaxAcceleration) {
             this.yAcceleration = this.yMaxAcceleration;
