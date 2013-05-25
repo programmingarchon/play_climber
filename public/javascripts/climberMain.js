@@ -10,18 +10,32 @@ window.onload = function(){
     game.keybind(87, 'up');
     game.keybind(83, 'down');
     game.keybind(32, 'space');
+    var map = {
+        name: "first level",
+        worldObjects: [
+            {type: "character", x:0, y:290},
+            {type: "box", x:0, y:290},
+            {type: "box", x:16, y:290},
+            {type: "box", x:32, y:290},
+            {type: "box", x:48, y:290},
+            {type: "box", x:64, y:290},
+            {type: "box", x:80, y:290}
+        ]
+    }
+
     game.onload = function() {
-        character = new Character();
-        game.rootScene.addChild(character);
-        game.rootScene.addChild(new Block(0,290));
-        game.rootScene.addChild(new Block(50, 290));
-        game.rootScene.addChild(new Block(100, 290));
-        game.rootScene.addChild(new Block(150, 290));
-        game.rootScene.addChild(new Block(200, 290));
-        game.rootScene.addChild(new Block(250, 290));
-        game.rootScene.addChild(new Block(266, 290));
-        game.rootScene.addChild(new Block(282, 290));
-        game.rootScene.addChild(new Block(298, 290));
+        initLevel(game, map);
     };
+
+    function initLevel(game, mapData) {
+        $.each(mapData.worldObjects, function(index, object) {
+            if(object.type === "box") {
+                game.rootScene.addChild(new Block(object.x, object.y));
+            } else if(object.type === "character") {
+                character = new Character();
+                game.rootScene.addChild(character);
+            }
+        })
+    }
     game.start();
 };
