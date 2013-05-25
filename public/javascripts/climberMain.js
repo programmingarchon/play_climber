@@ -19,7 +19,19 @@ window.onload = function(){
             {type: "box", x:32, y:290},
             {type: "box", x:48, y:290},
             {type: "box", x:64, y:290},
-            {type: "box", x:80, y:290}
+            {type: "box", x:80, y:290},
+            {type: "box", x:130, y:240},
+            {type: "box", x:146, y:240},
+            {type: "box", x:162, y:240},
+            {type: "box", x:178, y:240},
+            {type: "box", x:32, y:190},
+            {type: "box", x:48, y:190},
+            {type: "box", x:64, y:190},
+            {type: "box", x:80, y:190},
+            {type: "box", x:130, y:140},
+            {type: "box", x:146, y:140},
+            {type: "box", x:162, y:140},
+            {type: "box", x:178, y:140}
         ]
     }
 
